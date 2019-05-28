@@ -1,7 +1,7 @@
 ---
-title: Setup
+title: Introduction to Machine Learning
 ---
-FIXME
+Practical introduction to Machine Learning using Python tools
 
 
 {% include links.md %}
