@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
 start: 540
-teaching: 60
+teaching: 30
 exercises: 0
 questions:
 - "Key question (FIXME)"

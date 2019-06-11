@@ -1,6 +1,6 @@
 ---
 title: "Clustering: K-means and Hierarchical Clustering"
-teaching: 60
+teaching: 30
 exercises: 30
 questions:
 - "Key question (FIXME)"

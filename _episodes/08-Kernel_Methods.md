@@ -1,7 +1,7 @@
 ---
 title: "Navie Bayes and Kernel Methods"
 teaching: 30
-exercises: 30
+exercises: 0
 questions:
 - "Key question (FIXME)"
 objectives:
