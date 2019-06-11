@@ -1,5 +1,5 @@
 ---
-title: "Linear Classifiers"
+title: "Decision trees and random forests"
 teaching: 30
 exercises: 30
 questions:

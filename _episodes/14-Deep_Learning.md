@@ -1,7 +1,7 @@
 ---
 title: "Deep Learning and Convolutional Neural Networks"
-teaching: 0
-exercises: 0
+teaching: 60
+exercises: 60
 questions:
 - "Key question (FIXME)"
 objectives:
