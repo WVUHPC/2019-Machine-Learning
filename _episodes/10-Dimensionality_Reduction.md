@@ -1,6 +1,6 @@
 ---
-title: "Introduction"
-teaching: 60
+title: "Hierarchical Clustering"
+teaching: 0
 exercises: 0
 questions:
 - "Key question (FIXME)"

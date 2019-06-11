@@ -1,7 +1,7 @@
 ---
-title: "Introduction"
+title: "Principal and independent component analysis"
 teaching: 60
-exercises: 0
+exercises: 30
 questions:
 - "Key question (FIXME)"
 objectives:

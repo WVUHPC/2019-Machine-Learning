@@ -1,5 +1,5 @@
 ---
-title: "Supervised"
+title: "Deep Learning and Convolutional Neural Networks"
 teaching: 0
 exercises: 0
 questions:
@@ -12,4 +12,3 @@ keypoints:
 FIXME
 
 {% include links.md %}
-

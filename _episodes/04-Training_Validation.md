@@ -1,7 +1,7 @@
 ---
-title: "Introduction"
-teaching: 60
-exercises: 0
+title: "Training, Validation, Test Data and Overfitting"
+teaching: 30
+exercises: 30
 questions:
 - "Key question (FIXME)"
 objectives:

@@ -1,6 +1,6 @@
 ---
-title: "Introduction"
-teaching: 60
+title: "Linear Classifiers"
+teaching: 0
 exercises: 0
 questions:
 - "Key question (FIXME)"

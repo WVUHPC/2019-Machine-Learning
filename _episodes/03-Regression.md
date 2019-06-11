@@ -1,7 +1,7 @@
 ---
-title: "Unsupervised"
-teaching: 0
-exercises: 0
+title: "Linear and Logistic Regression"
+teaching: 30
+exercises: 30
 questions:
 - "Key question (FIXME)"
 objectives:
@@ -12,4 +12,3 @@ keypoints:
 FIXME
 
 {% include links.md %}
-

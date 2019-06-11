@@ -1,7 +1,7 @@
 ---
-title: "Introduction"
-teaching: 60
-exercises: 0
+title: "Linear Classifiers"
+teaching: 30
+exercises: 30
 questions:
 - "Key question (FIXME)"
 objectives:

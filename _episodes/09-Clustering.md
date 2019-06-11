@@ -1,7 +1,7 @@
 ---
-title: "Introduction"
+title: "Clustering: K-means and Hierarchical Clustering"
 teaching: 60
-exercises: 0
+exercises: 30
 questions:
 - "Key question (FIXME)"
 objectives:
