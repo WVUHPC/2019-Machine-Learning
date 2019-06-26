@@ -279,5 +279,183 @@ In [15]: for ind,vals in c_stats_good[['iso3', '2017_x', '2017_y']].iterrows():
   <img src="{{ page.root }}/fig/Figure_2.png" alt="With the country codes" />
 </a>
 
+Up to now, all that we have done is to gather the data, selecting a couple of features and visualize how they are related. Now is time for doing regression analysis. Regressing analysis is a set of techniques that allow us to get prediction on new data based on a collection of known values. This is part of the **supervised learning** that we discuss in the first episode.
+
+The simplest methods or regression assume that there is a linear relation between the features. It is clear from the figure that the GDP per Capita and the life expectancy are positively related, ie when a country increases its GDP per Capita people have the tendency to live longer. However, at some point a wealth country reaches a biological limit for aging, a limit that is either intrinsic to human biology or to our current level of technology. Either way it is clear that a simple linear model is not good enough in this case, at least not for a single variable.
+
+Lets continue with the Linear Regression and see what we get.
+Scikit-Learn offers Linear Regression with a very simple interface.
+
+
+~~~
+In [7]: from sklearn.linear_model import LinearRegression
+   ...: lin_reg_model = LinearRegression()
+~~~
+{: .source}
+
+All that we have to do is offering to the model a set of (n_cases, m_features) and n_results. In our case we are just working with a single feature (gdpcap) and we have 183 cases. We order those as a pandas or numpy array with 2 dimensions for X and a single dimension for y:
+
+~~~
+In [10]: import numpy as np
+
+In [11]: X=np.c_[c_stats_good['2017_x'].tolist()]
+    ...: y=np.c_[c_stats_good['2017_y'].tolist()]
+    ...:                                               
+~~~
+{: .source}
+
+Take the opportunity to have a look at the data, it should have 1 column and 183 rows. The rows represent the known cases and for each we are offering a single feature.
+
+~~~
+In [13]: X.shape
+Out[13]: (183, 1)
+
+In [14]: y.shape
+Out[14]: (183, 1)
+~~~
+{: .source}
+
+The next step is to fit, in a ordinary linear regression also called Ordinary Least Squares (OLS) the algorithm is trying to get the parameters of a line (slope and intercept) that minimizes the sum of the vertical distances between the known values and the predicted value from the line.
+
+~~~
+In [16]: lin_reg_model.fit(X,y)
+Out[16]: LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+
+In [17]: lin_reg_model.coef_
+Out[17]: array([[0.00025899]])
+
+In [18]: lin_reg_model.intercept_
+Out[18]: array([67.38380155])
+~~~
+{: .source}
+
+For a single feature we have just two parameters to fit, the slope and the intercept, in our case, the intercept should be the life expectancy for a country that has Zero GDP resulting in an age of 67.3 years. Lets see how that looks in our plot.
+
+~~~
+In [24]: import numpy as np
+
+In [25]: xx=np.array([0,120000])
+
+In [26]: yy=xx*lin_reg_model.coef_[0]+lin_reg_model.intercept_[0]
+
+In [27]: plt.plot(xx,yy, color='lightgray')
+
+Out[27]: [<matplotlib.lines.Line2D at 0x7fa048ddb908>]
+~~~
+{: .source}
+
+It should be clear what a Linear regression is trying to do. Despite of countries with large **gdpcap** and the poor countries with very low life expectancy the model search for a line that better adjust the values. We will review this later on, but this is a good opportunity to show another regression model.
+
+You can assume that in order to get an estimate of the life expectancy for a country what you can do is searching for a country or set of countries that is close it in the features space, as we have just a single feature you can thing that by appropriated weighting on near neighbors  you can devise an approximate **lifeexp**.
+
+Scikit Learn offers the class KNeighborsRegressor that is able to predict values using a given number of neighbors. In order to see how that works we can use a range of values for gdpcap and see the resulting prediction with 3 and 5 neighbors.
+
+~~~
+In [34]: from sklearn.neighbors import KNeighborsRegressor
+    ...: nreg3=KNeighborsRegressor(n_neighbors=3)
+    ...: nreg3.fit(X,y)
+
+Out[34]:
+KNeighborsRegressor(algorithm='auto', leaf_size=30, metric='minkowski',
+                    metric_params=None, n_jobs=None, n_neighbors=3, p=2,
+                    weights='uniform')
+
+In [35]: nreg5=KNeighborsRegressor(n_neighbors=5)
+    ...: nreg5.fit(X,y)
+
+Out[35]:
+KNeighborsRegressor(algorithm='auto', leaf_size=30, metric='minkowski',
+                    metric_params=None, n_jobs=None, n_neighbors=5, p=2,
+                    weights='uniform')
+
+~~~
+{: .source}
+
+Now we can plot the predicted values using 3 and 5 neighbors
+
+~~~
+In [41]: plt.plot(xx,y3, label='3 Neighbors', color='lightblue', marker='^', markersize=8)
+
+Out[41]: [<matplotlib.lines.Line2D at 0x7fa048919668>]
+
+In [42]: plt.plot(xx,y5, label='5 Neighbors', color='lightgreen', marker='v', markersize=8)
+
+Out[42]: [<matplotlib.lines.Line2D at 0x7fa048919160>]
+~~~
+{: .source}
+
+The KNeighborsRegressor is simple and for this case it offers better predictions but it is not parametric, ie you need the whole set of points to produce any prediction. On the contrary a parametric model like LinearRegression once you have determined the coefficients, the data itself is not longer used, an equation, in this case a line can predict new values alone.
+
+<a href="{{ page.root }}/fig/Figure_4.png">
+  <img src="{{ page.root }}/fig/Figure_4.png" alt="With the country codes" />
+</a>
+
+Up to now we have assume a linear relation between **gdpcap** and **lifeexp** something that clearly is not a valid assumption for this pair of features.
+We can keep the machinery of LinearRegression and use a trick to model the problem with a curve. The trick consists in creating new variables
+
+ <img src="https://latex.codecogs.com/svg.latex?\Large&space;y= w_0 + w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4 + w_5 x_5" title="\Large y= w_0 + w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4 + w_5 x_5" />
+
+With a simple transformation where:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;x_1&=&\mathrm{gdpcap},\\&space;x_2&=&\mathrm{lifeexp},\\&space;x_3&=&\mathrm{gdpcap*lifeexp},\\&space;x_4&=&\mathrm{gdpcap^2},\\&space;x_5&=&\mathrm{lifeexp^2},&space;\end{align*}" target="\_blank"><img src="https://latex.codecogs.com/svg.latex?\begin{align*}&space;x_1&=&\mathrm{gdpcap},\\&space;x_2&=&\mathrm{lifeexp},\\&space;x_3&=&\mathrm{gdpcap*lifeexp},\\&space;x_4&=&\mathrm{gdpcap^2},\\&space;x_5&=&\mathrm{lifeexp^2},&space;\end{align*}" title="\begin{align*} x_1&=&\mathrm{gdpcap},\\ x_2&=&\mathrm{lifeexp},\\ x_3&=&\mathrm{gdpcap*lifeexp},\\ x_4&=&\mathrm{gdpcap^2},\\ x_5&=&\mathrm{lifeexp^2}, \end{align*}" /></a>
+
+With this transformation of variables, we can use the same machinery of LinearRegression to try to account for the non-linearity of the relation between gdpcap and lifeexp
+
+~~~
+In [58]: from sklearn.preprocessing import PolynomialFeatures
+
+In [59]: pr= LinearRegression()
+
+In [60]: quadratic = PolynomialFeatures(degree=2)
+
+In [61]: X_quad = quadratic.fit_transform(X)
+
+In [62]: xx=np.arange(0,120000,10000)[:,np.newaxis]
+
+In [64]: xx=np.arange(0,120000,1000)[:,np.newaxis]
+
+In [65]: pr.fit(X_quad,y)
+Out[65]: LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+
+In [66]: y_quad_fit=pr.predict(quadratic.fit_transform(xx))
+
+In [67]: plt.plot(xx,y_quad_fit)                                      
+Out[67]: [<matplotlib.lines.Line2D at 0x7fa0816a0080>]
+~~~
+{: .source}
+
+<a href="{{ page.root }}/fig/Figure_5.png">
+  <img src="{{ page.root }}/fig/Figure_5.png" alt="With the country codes" />
+</a>
+
+But we have now another problem, for very rich countries we are not predicting high life expectancy but the polinomial model is actually showing a decrease in the value. The fundamental problem is that GPD alone is not sufficient to predict life expectancy. The distribution of the wealth is also important. If money is very few hands, those hands will have longer life expectancy at expenses of many with short lifes. We need to include inequality and maybe some other features to actually account for the complexity of the data.
+
+At this point what we can do is to go back gather more features and study in more detail the relationships between them.
+
+## Visualizing relations between features
+
+Lets start from scratch and gather the data again, this time we will not focus on the GDP alone but include a few more economical features and the relations between them. For that we will use a package called seaborn that uses matplotlib to produce plots comparing several features in a single plot.
+
+~~~
+pip install seaborn
+~~~
+{: .source}
+
+And lets recover the DataFrame with all the values again
+
+~~~
+In [1]: %matplotlib
+Using matplotlib backend: TkAgg
+
+In [2]: import numpy as np
+
+In [3]: import pandas
+   ...: df=pandas.read_excel("2018_all_indicators.xlsx")
+
+In [4]: import matplotlib.pyplot as plt
+
+In [5]: import seaborn as sns
+~~~
+{: .source}
 
 {% include links.md %}
