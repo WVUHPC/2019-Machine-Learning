@@ -205,10 +205,7 @@ Right now we will see if GDP per Capita and Life Expectancy correlates to each o
 
 ~~~
 In [10]: gdpcap=df.loc[df['indicator_id']==136706][['indicator_name','iso3',2017]]
-    ...: lifeexp=df.loc[df['indicator_id']==69206][['indicator_name','iso3',2017]]
-    ...:
-
-In [11]:             
+In [11]: lifeexp=df.loc[df['indicator_id']==69206][['indicator_name','iso3',2017]]
 ~~~
 {: .source}
 
@@ -216,13 +213,17 @@ See both dataframes and check the number of rows for each. Notice that the numbe
 
 Oue next step is to collect both dataframes in a single one. What we are doing is converting a 3D collection of data and gathering an slice, one single year (2017) for a couple of indicators and for all countries. Pandas offers a very efficient tool for this with the merging method.
 
+~~~
+In [12]: c_stats=pandas.merge(gdpcap,lifeexp, on='iso3')            
+~~~
+{: .source}
+
+
 There are values there that are NaN, the good news is there are not too many and we can remove all of them an still get a good distribution of data points.
 Pandas offers a way to remove all the rows with NaN values
 
 ~~~
 In [24]: c_stats_good=c_stats.dropna()
-
-In [25]:   
 ~~~
 {: .source}
 
