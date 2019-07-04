@@ -10,8 +10,7 @@ keypoints:
 - "First key point. Brief Answer to questions. (FIXME)"
 ---
 
-
-Compare with the methods previously discussed, here we will focus on classifiers where the features are not necessarily avaialable at the same time and the decisions are based on weigthing the demands of the situation. This means that we are evaluating some rules and taking decision as we go along. 
+Compared with the methods previously discussed, here we will focus on classifiers where the features are not necessarily avaialable at the same time and the decisions are based on weigthing the demands of the situation. This means that we are evaluating some rules and taking decision as we go along. 
 
 The major advantages on this methodology are:
 
@@ -40,7 +39,9 @@ The following figure shows an example of a decision tree on how to classify some
 </a>
 
 
-Now, it is clear that the tree shape can change depending on how the tree is built.
+Now, it is clear that the tree shape can change depending on how the tree is built. Different methods can be used to create the tree and here is where we start exploring this methodology.
+
+First of all go to the lesson Regression and import into pandas the file 2018_all_indicators.xlsx. Follow the same instructions on curable data
 
 In any case, in the use of this methodology we need to keep in mind the main disadvantages:
 
