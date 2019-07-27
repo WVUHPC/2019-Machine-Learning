@@ -7,24 +7,10 @@ questions:
 objectives:
 - "Learn how to use Scikit-Learn to create decision trees and random forest for inductive inference"
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "Decision trees and random forest."
 ---
 
-Compared with the methods previously discussed, here we will focus on classifiers where the features are not necessarily avaialable at the same time and the decisions are based on weigthing the demands of the situation. This means that we are evaluating some rules and taking decision as we go along. 
-
-The major advantages on this methodology are:
-
-1) Rules can be interpretated easily by the user, which makes the method very transparent. 
-
-2) Different tools can be used to visualize the decision flow chart that it is then summarized in the form of a tree, where decision options correspond to different branches and status of the classification oor outcomes correspond to different leaves. 
-
-3) The training is logarithmic with the number of points with the number of data points.
-
-4) The data preparation is very little as in many cases te data can se used directly as it comes from the database.
-
-5) The data can be diverse, which means that some can be numeric, some other can be a character string and some can be boolean.
-
-6) The model can be easily assessed by simple statistical measurements.
+Compared with the methods previously discussed, we now focus on classifiers where the data features are not necessarily avaialable at the same time and the decisions are based on weigthing the demands of the situation. This means that we are evaluating some rules and taking decision as we go along. For this problem, we will consider the method of decision trees.  A method used for regression and classification, where a set of rules are created to allow the data classification into expected outcomes. 
 
 
 The reliability of the information in the decision tree depends on feeding the precise internal and external information at the onset. Even a small change in input data can at times, cause large changes in the tree. Changing variables, excluding duplication information, or altering the sequence midway can lead to major changes and might possibly require redrawing the tree.
@@ -39,9 +25,32 @@ The following figure shows an example of a decision tree on how to classify some
 </a>
 
 
-Now, it is clear that the tree shape can change depending on how the tree is built. Different methods can be used to create the tree and here is where we start exploring this methodology.
+Now, it is clear that the tree shape can change depending on how the tree is built. Different methods can be used to create the tree, we will start by using the tree as a classified by using Scikit. Then, we will create our own implementation of a classifier and discuss different methods to measure the performance of the created tree.
 
-First of all go to the lesson Regression and import into pandas the file 2018_all_indicators.xlsx. Follow the same instructions on curable data
+During the course of this section, we will use the data used in section 03, therefore we advise you to go back and recreate the data reading and manipulation. We will use some of the introduced lines here without any explanation within ipython.
+
+~~~
+In [1]: import pandas
+
+In [2]: df=pandas.read_excel("2018_all_indicators.xlsx")
+
+In [3]: print(df['indicator_name']) 
+~~~
+
+
+The major advantages on this methodology are:
+
+1) Rules can be interpretated easily by the user, which makes the method very transparent. 
+
+2) Different tools can be used to visualize the decision flow chart that it is then summarized in the form of a tree, where decision options correspond to different branches and status of the classification oor outcomes correspond to different leaves. 
+
+3) The training is logarithmic with the number of points with the number of data points.
+
+4) The data preparation is very little as in many cases te data can se used directly as it comes from the database.
+
+5) The data can be diverse, which means that some can be numeric, some other can be a character string and some can be boolean.
+
+6) The model can be easily assessed by simple statistical measurements.
 
 In any case, in the use of this methodology we need to keep in mind the main disadvantages:
 
